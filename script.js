@@ -34,3 +34,69 @@ custom.value = "";
 calc();
 })
 });
+
+
+custom.addEventListener("input", ()=>{
+    if(custom.value >= 0)
+    {    
+        tipBtn.forEach(e =>{
+            e.classList.remove("selected");
+        })
+        tip = custom.value;
+        calc();
+    }
+})
+
+
+
+
+amount.addEventListener("input", ()=>{
+    amt = Number(amount.value);
+    if(amt <= 0 && amt != ""){
+        amount.classList.add("error");
+        amtErr.style.visibility = "visible";
+    }else{
+        amount.classList.remove("error");
+        amtErr.style.visibility = "hidden";
+        calc();        
+    }
+})
+
+
+
+people.addEventListener("input", ()=>{
+    ppl = people.value;
+    if(ppl <= 0 && ppl != ""){
+        people.classList.add("error");
+        pplErr.style.visibility = "visible";
+    }else{
+        people.classList.remove("error");
+        pplErr.style.visibility = "hidden";
+        calc();        
+    }
+})
+
+reset.addEventListener("click", rst);
+
+
+function rst(){
+    amount.value = "";
+    people.value = "1";
+    custom.value = "";
+    perPerson.innerHTML = "$0.00";
+    total.innerHTML = "$0.00";
+
+    tipBtn.forEach(e =>{
+        e.classList.remove("selected");
+        e.classList.add("unselected");
+    })
+}
+
+function calc(){
+    if(amt >= 0 && ppl >= 1){
+        let totalTip = (tip*amt)/(100);
+        let totalAmt = amt + totalTip;
+        perPerson.innerHTML = `$${((totalTip)/(ppl)).toFixed(2)}`;
+        total.innerHTML = `$${((totalAmt)/(ppl)).toFixed(2)}`;
+    }
+}
