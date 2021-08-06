@@ -10,36 +10,35 @@ const pplErr = document.querySelector(".people-error");
 const reset = document.querySelector(".reset");
 
 rst()
-let tip =0, amt=0,ppl=1;
+let tip = 0, amt = 0, ppl = 1;
 
-tipBtn.forEach(btn=>{
-btn.addEventListener("click",()=>{
-if(btn.classList.contains("selected")){
-
-
-    tip=0;
-    btn.classList.remove("unselected");
-    btn.classList.add("selected");
-}else{
-    tipBtn.forEach(e=>{
+tipBtn.forEach(btn => {
+    btn.addEventListener("click", () => {
+        if (btn.classList.contains("selected")) {
 
 
-            e.classList.remove("selected");
+            tip = 0;
+            btn.classList.remove("unselected");
+            btn.classList.add("selected");
+        } else {
+            tipBtn.forEach(e => {
+
+
+                e.classList.remove("selected");
+            })
+            tip = btn.value;
+            btn.classList.remove("unselected");
+            btn.classList.add("selected");
+        }
+        custom.value = "";
+        calc();
     })
-    tip=btn.value;
-    btn.classList.remove("unselected");
-    btn.classList.add("selected");
-}
-custom.value = "";
-calc();
-})
 });
 
 
-custom.addEventListener("input", ()=>{
-    if(custom.value >= 0)
-    {    
-        tipBtn.forEach(e =>{
+custom.addEventListener("input", () => {
+    if (custom.value >= 0) {
+        tipBtn.forEach(e => {
             e.classList.remove("selected");
         })
         tip = custom.value;
@@ -50,53 +49,53 @@ custom.addEventListener("input", ()=>{
 
 
 
-amount.addEventListener("input", ()=>{
+amount.addEventListener("input", () => {
     amt = Number(amount.value);
-    if(amt <= 0 && amt != ""){
+    if (amt <= 0 && amt != "") {
         amount.classList.add("error");
         amtErr.style.visibility = "visible";
-    }else{
+    } else {
         amount.classList.remove("error");
         amtErr.style.visibility = "hidden";
-        calc();        
+        calc();
     }
 })
 
 
 
-people.addEventListener("input", ()=>{
+people.addEventListener("input", () => {
     ppl = people.value;
-    if(ppl <= 0 && ppl != ""){
+    if (ppl <= 0 && ppl != "") {
         people.classList.add("error");
         pplErr.style.visibility = "visible";
-    }else{
+    } else {
         people.classList.remove("error");
         pplErr.style.visibility = "hidden";
-        calc();        
+        calc();
     }
 })
 
 reset.addEventListener("click", rst);
 
 
-function rst(){
+function rst() {
     amount.value = "";
     people.value = "1";
     custom.value = "";
     perPerson.innerHTML = "$0.00";
     total.innerHTML = "$0.00";
 
-    tipBtn.forEach(e =>{
+    tipBtn.forEach(e => {
         e.classList.remove("selected");
         e.classList.add("unselected");
     })
 }
 
-function calc(){
-    if(amt >= 0 && ppl >= 1){
-        let totalTip = (tip*amt)/(100);
+function calc() {
+    if (amt >= 0 && ppl >= 1) {
+        let totalTip = (tip * amt) / (100);
         let totalAmt = amt + totalTip;
-        perPerson.innerHTML = `$${((totalTip)/(ppl)).toFixed(2)}`;
-        total.innerHTML = `$${((totalAmt)/(ppl)).toFixed(2)}`;
+        perPerson.innerHTML = `$${((totalTip) / (ppl)).toFixed(2)}`;
+        total.innerHTML = `$${((totalAmt) / (ppl)).toFixed(2)}`;
     }
 }
